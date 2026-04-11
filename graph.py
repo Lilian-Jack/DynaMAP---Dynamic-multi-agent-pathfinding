@@ -64,6 +64,11 @@ class Grille:
         #On applique le maste booléen pour placer les obstacles
         grilleAffichage[self.grille] = 1
 
+        #permet de faire un quadrillage ticks permet de décaler les lignespour qu'elles s'alignent sur les cases
+        plt.xticks(np.arange(-0.5, self.taille, 1), [])
+        plt.yticks(np.arange(-0.5, self.taille, 1), [])
+        plt.grid(True, color='black', linewidth=0.5)
+
         plt.imshow(grilleAffichage,cmap=cmap)
         plt.show()
 

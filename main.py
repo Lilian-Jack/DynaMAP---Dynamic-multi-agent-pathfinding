@@ -1,7 +1,7 @@
 #DynaMAP - Dynamic multi agent Pathfinding
 import numpy as np
 from graph import Grille, Robot
-from algorithms import BFS
+from algorithms import BFS, Astar
 
 
 
@@ -35,6 +35,8 @@ def createInstance(taille,partObstacle,nbRobot):
             # nécessité de regarder si la destination du robot est atteignable depuis son spawn
             if(BFS(grille,x,y,xDest,yDest)):
                 robot = Robot(i, x, y, xDest, yDest, colors[i])
+                robot.chemin = Astar(grille,x,y,xDest,yDest)
+                print(robot.chemin)
                 # on ajoute les robots dans la grille
                 grille.ajoutRobot(robot)
                 break
@@ -42,8 +44,9 @@ def createInstance(taille,partObstacle,nbRobot):
     return grille
 
 
-grilleTest = createInstance(25,0.15,3)
+grilleTest = createInstance(25,0.15,10)
 grilleTest.afficheGrille()
+
 
 
 
