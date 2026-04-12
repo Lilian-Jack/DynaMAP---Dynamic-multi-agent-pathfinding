@@ -1,6 +1,6 @@
 import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.colors import ListedColormap
+
+
 
 
 #classe robot qui va bouger sur la grille, statut indique si le robot est arrivé à sa destination
@@ -9,6 +9,8 @@ class Robot:
         self.id = id
         self.x = x
         self.y = y
+        self.xSpawn=x
+        self.ySpawn=y
         self.xFinal = xFinal
         self.yFinal = yFinal
         self.statut = False
@@ -47,30 +49,7 @@ class Grille:
                 voisins.append((i,j))
         return voisins
 
-    #methode qui permet d'afficher l'état de la grille
-    def afficheGrille(self):
-        #blanc pour le vide et gris pour les murs
-        cmap = ListedColormap(["white","grey"])
 
-        #Création de la grille de valeur
-        grilleAffichage = np.full((self.taille,self.taille),0)
-
-        for robot in self.robots:
-            #Affichage des spawns avec o
-            plt.plot(robot.y, robot.x, marker='o', color=robot.couleur,markersize=10, markeredgecolor='black', markeredgewidth=1.5)
-            #Affichage des destinations avec *
-            plt.plot(robot.yFinal, robot.xFinal, marker='*', color=robot.couleur,markersize=12, markeredgecolor='black', markeredgewidth=1.5)
-
-        #On applique le maste booléen pour placer les obstacles
-        grilleAffichage[self.grille] = 1
-
-        #permet de faire un quadrillage ticks permet de décaler les lignespour qu'elles s'alignent sur les cases
-        plt.xticks(np.arange(-0.5, self.taille, 1), [])
-        plt.yticks(np.arange(-0.5, self.taille, 1), [])
-        plt.grid(True, color='black', linewidth=0.5)
-
-        plt.imshow(grilleAffichage,cmap=cmap)
-        plt.show()
 
 
 
