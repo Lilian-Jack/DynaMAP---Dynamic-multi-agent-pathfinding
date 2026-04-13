@@ -5,7 +5,7 @@ Le projet a pour objectif d'implémenter des algorithmes de pathfinding pour des
 2. Les edges conflicts : les agents ne doivent pas se croiser sur un même arc lorsqu'il échange de position
 
 ## Structure de données
-*Classes
+* Classes
   * Robot : Implémente les  agents avec leurs positions actuelles, leurs spawns, leurs destination et le chemin suggéré par l'algorithme de pathfinding
   * Grille : Implémente le quadrillage sur lequel se trouvent les robots. Contient les robots et des fonctions qui permettent de connaître l'état de la grille. Par exemple, la fonction voisins permet aux robots de connaître les voisins possibles pour leurs prochain déplacement
   * Instance : Permet d'instancier une grille avec des agents, de l'afficher, de l'animer et de dérouler les différents algorithmes
