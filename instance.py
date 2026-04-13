@@ -10,7 +10,9 @@ class Instance:
     def __init__(self,taille,partObstacle,nbRobot):
         #Fonction qui permet de crée différentes instance de grille avec des robots
         self.grille = Grille(taille,partObstacle)
-
+        #Va nous permettre de savoir ou sont les conflit si des robots réserves les mêmes noeuds ou arretes
+        self.reservations_noeuds = {}
+        self.reservations_arretes = {}
         # Création d'un tableau avec des couleurs aléatoires
         colors = ['#%06X' % np.random.randint(0, 0xFFFFFF) for i in range(nbRobot)]
 
@@ -39,6 +41,44 @@ class Instance:
                     # on ajoute les robots dans la grille
                     self.grille.ajoutRobot(robot)
                     break
+    #fonction qui nous permet de déterminer les conflits entre agents
+    def detectionConflits(self):
+        for robot in self.grille.robots:
+            #Détection des conflits sur les noeuds
+            for t, (x,y) in enumerate(robot.chemin):
+                if (x,y,t) not in self.reservations_noeuds:
+                    self.reservations_noeuds[(x,y,t)] = []
+                self.reservations_noeuds[(x, y, t)].append(robot.id)
+            #Détection des conflits sur les arrêtes
+            for t in range(len(robot.chemin)-1):
+                x1,y1 = robot.chemin[t]
+                x2,y2 = robot.chemin[t+1]
+                if (x1,y1,x2,y2,t) not in self.reservations_arretes:
+                    self.reservations_arretes[(x1,y1,x2,y2,t)] = []
+                self.reservations_arretes[(x1,y1,x2,y2,t)].append(robot.id)
+
+        conflits_sommets = {}
+        conflits_arretes = {}
+
+        # Enumération des différents conflits
+        for key, value in self.reservations_noeuds.items():
+            if len(value) > 1:
+                conflits_sommets[key] = value
+
+        for (x1, y1, x2, y2, t), value in self.reservations_arretes.items():
+            if (x2, y2, x1, y1, t) in self.reservations_arretes.keys() and (x2, y2, x1, y1,t) not in conflits_arretes.keys():
+                conflits_arretes[(x1, y1, x2, y2, t)] = value + self.reservations_arretes[(x2, y2, x1, y1, t)]
+
+        print("Il y a " + str(len(conflits_sommets)) + " vertex conflicts dans cette instance :")
+        for (x, y, t), value in conflits_sommets.items():
+            print("Conflit en (" + str(x) + "," + str(y) + ") à " + str(t) + " entre les agents : " + str(value))
+
+        print("Il y a " + str(len(conflits_arretes)) + " edges conflicts dans cette instance :")
+        for (x1, y1, x2, y2, t), value in conflits_arretes.items():
+            print("Conflit en (" + str(x1) + "," + str(y1) + "," + str(x2) + "," + str(y2) + ") à " + str(
+                t) + " entre les agents : " + str(value))
+
+
 
     #methode qui permet d'afficher l'état de la grille
     def afficheGrille(self):

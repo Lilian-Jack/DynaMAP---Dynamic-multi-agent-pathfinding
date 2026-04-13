@@ -16,6 +16,7 @@ class Robot:
         self.statut = False
         self.couleur = couleur
         self.chemin = []
+        self.time = 0
     def ajoutChemin(self):
         self.chemin.append((self.x,self.y))
 
