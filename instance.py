@@ -13,6 +13,9 @@ class Instance:
         #Va nous permettre de savoir ou sont les conflit si des robots réserves les mêmes noeuds ou arretes
         self.reservations_noeuds = {}
         self.reservations_arretes = {}
+        self.conflits_sommets = {}
+        self.conflits_arretes = {}
+        conflits_arretes = {}
         # Création d'un tableau avec des couleurs aléatoires
         colors = ['#%06X' % np.random.randint(0, 0xFFFFFF) for i in range(nbRobot)]
 
@@ -78,6 +81,9 @@ class Instance:
             print("Conflit en (" + str(x1) + "," + str(y1) + "," + str(x2) + "," + str(y2) + ") à " + str(
                 t) + " entre les agents : " + str(value))
 
+        self.conflits_arretes = conflits_arretes
+        self.conflits_sommets = conflits_sommets
+
 
 
     #methode qui permet d'afficher l'état de la grille
@@ -109,7 +115,7 @@ class Instance:
     def animer(self):
         #nombre de frame total = chemin le plus long
         nbFrame = max(len(robot.chemin) for robot in self.grille.robots)
-        cmap = ListedColormap(["white","grey"])
+        cmap = ListedColormap(["white","grey","red"])
         fig, ax = plt.subplots(figsize=(6,6), dpi=200)
 
         #on veut garder le point de départ afficher
@@ -120,7 +126,16 @@ class Instance:
 
             grilleAffichage = np.full((self.grille.taille, self.grille.taille), 0)
             grilleAffichage[self.grille.grille] = 1
-            ax.imshow(grilleAffichage, cmap=cmap)
+
+            #affichage des conflits
+            for (x1,y1,t) in self.conflits_sommets.keys():
+                if t==frame:
+                    grilleAffichage[x1,y1]=2
+            for (x1, y1, x2, y2, t) in self.conflits_arretes.keys():
+                if t==frame:
+                    grilleAffichage[x1,y1]=2
+                    grilleAffichage[x2,y2]=2
+            ax.imshow(grilleAffichage, cmap=cmap, vmin=0, vmax=2)
 
             ax.set_xticks(np.arange(-0.5, self.grille.taille, 1), [])
             ax.set_yticks(np.arange(-0.5, self.grille.taille, 1), [])
