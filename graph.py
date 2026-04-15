@@ -50,6 +50,33 @@ class Grille:
                 voisins.append((i,j))
         return voisins
 
+    #fonction voisins qui va prendre en compte le contexte spatio-temporel qui permettra d'éliminer les conflits, rajout de la possibilité de faire du surplace
+    def voisinsST(self,x,y,t):
+        potentiels_voisins = [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1),(x,y)]
+        voisins = []
+        t_suivant = t +1
+        for i,j in potentiels_voisins:
+            potentiel = True
+            if (i >= 0 and i<self.taille and j>=0 and j<self.taille and not self.grille[i][j]):
+                for robot in self.robots:
+                    #condition qui empêche de prendre une case déjà occupe (1er condition vérifie le vertex conflitc et 2eme le edge conflict)
+                    if t_suivant < len(robot.chemin):
+                        #on regarde si la case est occupé à la prochaine itération
+                        if robot.chemin[t_suivant]==(i,j):
+                            potentiel = False
+                            break
+                        if robot.chemin[t]==(i,j) and robot.chemin[t_suivant]==(x,y):
+                            potentiel = False
+                            break
+                    #on prend en compte le fait qu'il y ai des robots déjà arrivé à destination
+                    else:
+                        if robot.chemin[-1]==(i,j):
+                            potentiel = False
+
+            if potentiel :
+                voisins.append((i, j))
+
+        return voisins
 
 
 

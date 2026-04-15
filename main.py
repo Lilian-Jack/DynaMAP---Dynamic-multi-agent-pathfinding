@@ -1,10 +1,11 @@
 #DynaMAP - Dynamic multi agent Pathfinding
 from instance import Instance
 
-grilleTest = Instance(20,0.15,20)
+#mode = ST ou naif
+grilleTest = Instance(10,0.15,12,"ST")
 grilleTest.afficheGrille()
 grilleTest.detectionConflits()
-grilleTest.animer()
+#grilleTest.animer()
 
 
 

@@ -75,6 +75,53 @@ def Astar(grille,x,y,xDest,yDest):
                 chemins[v]=u[1]
         caseExplore.add(u[1])
 
+#nouvelle fonction de construction adapté aux tuples*3
+def reconstructionST(chemins,spawn,destination):
+    chemin = []
+    case = destination
+    while case != spawn :
+        chemin.append(case)
+        case = chemins[case]
+    chemin.reverse()
+
+    #on transforme la liste (x,y,z) en (x,y) pour les fonctios de détections de conflits et d'animation, on n'a plus besoin du facteur temporelle
+    chemin_epure = [(x,y) for (x,y,z) in chemin]
+    return chemin_epure
+
+# Algorithme A* qui prend en comptel le facteur spatio temporel
+def AstarST(grille,x,y,xDest,yDest):
+    #case déjà exploré par l'algo pour ne pas tourner en rond (set() suffit)
+    caseExplore = set()
+    #case qu'on doit exploré
+    caseNonExplore = []
+
+    #dictionnaire qui garde en mémoire le cout des cases (le nombre de pas depuis le spawn)
+    cout = {}
+    #ajout du parametre spatio-temporel
+    heapq.heappush(caseNonExplore,(0,(x,y,0)))
+    cout[(x,y,0)]=0
+
+    #dictionnaire qui nous permet de retracer le chemin à la fin, clé : case ,valeur : case précédente
+    chemins = {}
+    #tant qu'on a pas exploré toutes les cases possibles
+    while(caseNonExplore):
+        u = heapq.heappop(caseNonExplore)
+        #on regarde si la case est la destination
+        if u[1][0]==xDest and u[1][1]==yDest:
+            #fonction pour reconstituer le chemin
+            chemin = reconstructionST(chemins,(x,y,0),(xDest,yDest,u[1][2]))
+            return chemin
+        voisins = grille.voisinsST(u[1][0],u[1][1],u[1][2])
+        for v in voisins:
+            vCout = cout[u[1]] + 1
+            #on regarde si v n'est pas exploré ou exploré avec un coup supérieur
+            if ((v[0],v[1],u[1][2] + 1) not in caseExplore) or (vCout<cout[(v[0],v[1],u[1][2]+1)]):
+                cout[(v[0],v[1],u[1][2]+1)]=vCout
+                vHeuristique = vCout + distanceManhattan(v[0],v[1],xDest,yDest)
+                heapq.heappush(caseNonExplore,(vHeuristique,(v[0],v[1],u[1][2] + 1)))
+                #construction du chemin
+                chemins[(v[0],v[1],u[1][2] + 1)]=u[1]
+        caseExplore.add(u[1])
 
 
 

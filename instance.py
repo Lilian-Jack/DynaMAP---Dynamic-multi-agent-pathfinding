@@ -1,13 +1,13 @@
 import numpy as np
 from graph import Grille, Robot
-from algorithms import BFS, Astar
+from algorithms import BFS, Astar, AstarST
 from matplotlib.animation import FuncAnimation
 from matplotlib.colors import ListedColormap
 import matplotlib.pyplot as plt
 
 #class qui permet des crées des instances facilement
 class Instance:
-    def __init__(self,taille,partObstacle,nbRobot):
+    def __init__(self,taille,partObstacle,nbRobot,mode):
         #Fonction qui permet de crée différentes instance de grille avec des robots
         self.grille = Grille(taille,partObstacle)
         #Va nous permettre de savoir ou sont les conflit si des robots réserves les mêmes noeuds ou arretes
@@ -15,7 +15,7 @@ class Instance:
         self.reservations_arretes = {}
         self.conflits_sommets = {}
         self.conflits_arretes = {}
-        conflits_arretes = {}
+        self.mode = mode
         # Création d'un tableau avec des couleurs aléatoires
         colors = ['#%06X' % np.random.randint(0, 0xFFFFFF) for i in range(nbRobot)]
 
@@ -40,10 +40,14 @@ class Instance:
                 # nécessité de regarder si la destination du robot est atteignable depuis son spawn
                 if(BFS(self.grille,x,y,xDest,yDest)):
                     robot = Robot(i, x, y, xDest, yDest, colors[i])
-                    robot.chemin = Astar(self.grille,x,y,xDest,yDest)
+                    if self.mode == "naif":
+                        robot.chemin = Astar(self.grille,x,y,xDest,yDest)
+                    elif self.mode == "ST":
+                        robot.chemin = AstarST(self.grille,x,y,xDest,yDest)
                     # on ajoute les robots dans la grille
                     self.grille.ajoutRobot(robot)
                     break
+
     #fonction qui nous permet de déterminer les conflits entre agents
     def detectionConflits(self):
         for robot in self.grille.robots:
