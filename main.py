@@ -2,10 +2,10 @@
 from instance import Instance
 
 #mode = ST ou naif
-grilleTest = Instance(10,0.15,12,"ST")
+grilleTest = Instance(10,0.15,4,"naif",45)
 grilleTest.afficheGrille()
 grilleTest.detectionConflits()
-#grilleTest.animer()
+grilleTest.animer()
 
 
 

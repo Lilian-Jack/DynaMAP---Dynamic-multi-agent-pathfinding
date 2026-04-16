@@ -37,6 +37,7 @@ def reconstruction(chemins,spawn,destination):
     while case != spawn :
         chemin.append(case)
         case = chemins[case]
+    chemin.append(spawn)
     chemin.reverse()
     return chemin
 
@@ -82,6 +83,7 @@ def reconstructionST(chemins,spawn,destination):
     while case != spawn :
         chemin.append(case)
         case = chemins[case]
+    chemin.append(spawn)
     chemin.reverse()
 
     #on transforme la liste (x,y,z) en (x,y) pour les fonctios de détections de conflits et d'animation, on n'a plus besoin du facteur temporelle
@@ -122,8 +124,5 @@ def AstarST(grille,x,y,xDest,yDest):
                 #construction du chemin
                 chemins[(v[0],v[1],u[1][2] + 1)]=u[1]
         caseExplore.add(u[1])
-
-
-
 
 

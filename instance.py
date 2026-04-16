@@ -7,7 +7,9 @@ import matplotlib.pyplot as plt
 
 #class qui permet des crées des instances facilement
 class Instance:
-    def __init__(self,taille,partObstacle,nbRobot,mode):
+    def __init__(self,taille,partObstacle,nbRobot,mode,seed=None):
+        if seed is not None:
+            np.random.seed(seed)
         #Fonction qui permet de crée différentes instance de grille avec des robots
         self.grille = Grille(taille,partObstacle)
         #Va nous permettre de savoir ou sont les conflit si des robots réserves les mêmes noeuds ou arretes
@@ -24,28 +26,30 @@ class Instance:
 
             #pour chaque robot on crée un spawn et une destinations sur une case vide / while(true) + break = équivalent do while
             while(True):
-                x = np.random.randint(0,taille-1)
-                y = np.random.randint(0,taille-1)
+                x = np.random.randint(0,taille)
+                y = np.random.randint(0,taille)
                 while(self.grille.occupe(x,y)):
-                    x = np.random.randint(0, taille - 1)
-                    y = np.random.randint(0, taille - 1)
+                    x = np.random.randint(0, taille)
+                    y = np.random.randint(0, taille)
 
-                xDest = np.random.randint(0,taille-1)
-                yDest = np.random.randint(0,taille-1)
+                xDest = np.random.randint(0,taille)
+                yDest = np.random.randint(0,taille)
                 while(self.grille.occupe(xDest,yDest) or (xDest == x and yDest == y)):
-                    xDest = np.random.randint(0,taille - 1)
-                    yDest = np.random.randint(0,taille - 1)
+                    xDest = np.random.randint(0,taille)
+                    yDest = np.random.randint(0,taille)
 
 
                 # nécessité de regarder si la destination du robot est atteignable depuis son spawn
                 if(BFS(self.grille,x,y,xDest,yDest)):
                     robot = Robot(i, x, y, xDest, yDest, colors[i])
+
                     if self.mode == "naif":
                         robot.chemin = Astar(self.grille,x,y,xDest,yDest)
                     elif self.mode == "ST":
                         robot.chemin = AstarST(self.grille,x,y,xDest,yDest)
                     # on ajoute les robots dans la grille
                     self.grille.ajoutRobot(robot)
+                    #print(str(robot.id) + " " + str(robot.chemin))
                     break
 
     #fonction qui nous permet de déterminer les conflits entre agents
