@@ -4,8 +4,7 @@ import numpy as np
 import heapq
 #importation de Queue car utiliser les listes python nous oblige à utiliser pop qui est en O(n) tandis que get est en 0(1)
 from queue import Queue
-from graph import  Grille
-
+from implementation.graph import Grille
 
 #Algorithme de parcours en largeur : Breadth First Search, permet de savoir si un point est atteignable à partir d'un autre point
 def BFS(grille,x,y,xDest,yDest):
@@ -96,7 +95,7 @@ def AstarST(grille,x,y,xDest,yDest):
     caseExplore = set()
     #case qu'on doit exploré
     caseNonExplore = []
-
+    #On met une limite de temps fixe pour éviter à l'algorithme de travailler sur un chemin introuvable
     #dictionnaire qui garde en mémoire le cout des cases (le nombre de pas depuis le spawn)
     cout = {}
     #ajout du parametre spatio-temporel

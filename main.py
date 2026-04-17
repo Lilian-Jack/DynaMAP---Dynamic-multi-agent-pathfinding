@@ -1,8 +1,9 @@
 #DynaMAP - Dynamic multi agent Pathfinding
-from instance import Instance
+from implementation.instance import Instance
+from algorithms.conflicts import detectionConflits
+from visualization.animation import afficheGrille,animer
 
-#mode = ST ou naif
-grilleTest = Instance(5,0.15,5,"naif",32)
-grilleTest.afficheGrille()
-grilleTest.detectionConflits()
-grilleTest.animer()
+grilleTest = Instance(15,0.15,20,"ST",42)
+afficheGrille(grilleTest)
+detectionConflits(grilleTest)
+animer(grilleTest)
