@@ -69,7 +69,7 @@ class Grille:
                     if robot.chemin[t_suivant]==(i,j):
                         potentiel = False
                         break
-                    if robot.chemin[t]==(i,j) and robot.chemin[t_suivant]==(x,y):
+                    if  robot.chemin[t]==(i,j) and robot.chemin[t_suivant]==(x,y):
                         potentiel = False
                         break
                     #on prend en compte le fait qu'il y ai des robots déjà arrivé à destination

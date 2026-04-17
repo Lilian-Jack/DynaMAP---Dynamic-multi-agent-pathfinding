@@ -64,6 +64,9 @@ class Instance:
             for t in range(len(robot.chemin)-1):
                 x1,y1 = robot.chemin[t]
                 x2,y2 = robot.chemin[t+1]
+                # on ignore le surplace
+                if (x1, y1) == (x2, y2):
+                    continue
                 if (x1,y1,x2,y2,t) not in self.reservations_arretes:
                     self.reservations_arretes[(x1,y1,x2,y2,t)] = []
                 self.reservations_arretes[(x1,y1,x2,y2,t)].append(robot.id)
