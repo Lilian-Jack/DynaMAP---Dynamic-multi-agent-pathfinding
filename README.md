@@ -45,7 +45,7 @@ Nous avons fait des comparaisons sur la longueur des chemins entre Astar et Asta
 </p>
 
 * Remarques
-  * Il n'y a pas de grandes différences entre les deux approches car en cas de conflits les robots ont le choix d'attendre donc cela allonge peu la longueur des chemins (on constate ci-dessous que le nombre d'attentes augmentent de plus en plus car c'est le principal moyen d'éviter les conflits sans allonger la longueur des chemins)
+  * Il n'y a pas de grandes différences entre les deux approches même si on voit qu'il y a un léger décrochages lors de l'augmentation du nombre de robots et de la densité. En effet, en cas de conflits les robots ont le choix d'attendre donc cela allonge peu la longueur des chemins (on constate ci-dessous que le nombre d'attentes augmentent de plus en plus car c'est le principal moyen d'éviter les conflits sans allonger la longueur des chemins)
 
 <p align="center">
   <img src="img/attente.png" width="300">
