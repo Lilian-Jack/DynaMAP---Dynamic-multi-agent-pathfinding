@@ -19,7 +19,7 @@ Le projet a pour objectif d'implémenter des algorithmes de pathfinding pour des
 
 * AstarST : Variantes Spatio-temporel de Astar qui va permettre des supprimer les conflits via une planification séquentielle (un agent après l'autre), il prend en compte le facteur temps pour éviter que deux agents réserve la même position ou arrêtes aux même moment (exemple ci-dessous avec la même instance que Astar mais sans conflits)
 <div align="center">
-  <img src="gif/animationAstarST.gif.gif" alt="gif Astar" width="300">
+  <img src="gif/animationAstarST.gif" alt="gif Astar" width="300">
 </div>
 
 ## BenchMarks
