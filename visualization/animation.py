@@ -42,36 +42,49 @@ def animer(instance):
     # fonction update appelé à chaque frame
     def update(frame):
         ax.clear()
-
+        ax.set_title(f"Multi-Agent Pathfinding (t = {frame})", fontsize=12)
         grilleAffichage = np.full((instance.grille.taille, instance.grille.taille), 0)
         grilleAffichage[instance.grille.grille] = 1
 
         # affichage des conflits
         for (x1, y1, t) in instance.conflits_sommets.keys():
             if t == frame:
-                grilleAffichage[x1, y1] = 2
+                ax.scatter(y1, x1, color="red", s=200, marker="X", zorder=4)
+
         for (x1, y1, x2, y2, t) in instance.conflits_arretes.keys():
             if t == frame:
-                grilleAffichage[x1, y1] = 2
-                grilleAffichage[x2, y2] = 2
+                ax.scatter(y1, x1, color="red", s=200, marker="X", zorder=4)
+                ax.scatter(y2, x2, color="red", s=200, marker="X", zorder=4)
         ax.imshow(grilleAffichage, cmap=cmap, vmin=0, vmax=2)
 
         ax.set_xticks(np.arange(-0.5, instance.grille.taille, 1), [])
         ax.set_yticks(np.arange(-0.5, instance.grille.taille, 1), [])
-        ax.grid(True, color='black', linewidth=0.5)
+        ax.grid(True, color='black', linewidth=0.2, alpha=0.3)
 
         for robot in instance.grille.robots:
             if frame < len(robot.chemin):
                 robot.x, robot.y = robot.chemin[frame]
+
+            #ajoute trajectoire
+            ax.plot(
+                [p[1] for p in robot.chemin[:frame + 1]],
+                [p[0] for p in robot.chemin[:frame + 1]],
+                color=robot.couleur,
+                linewidth=2,
+                alpha=0.5,
+                zorder=2
+            )
+
             # spawn
-            ax.plot(robot.ySpawn, robot.xSpawn, marker='o', color=robot.couleur, markersize=10, markeredgecolor='black',
+            ax.plot(robot.ySpawn, robot.xSpawn, marker='o', color=robot.couleur, markersize=6,alpha=0.6, markeredgecolor='black',
                     markeredgewidth=1.5)
             # destination
-            ax.plot(robot.yFinal, robot.xFinal, marker="*", color=robot.couleur, markersize=12, markeredgecolor='black',
+            ax.plot(robot.yFinal, robot.xFinal, marker="*", color=robot.couleur, markersize=8, markeredgecolor='black',
                     markeredgewidth=1.5)
             # emplacement
-            ax.plot(robot.y, robot.x, marker=".", color=robot.couleur, markersize=10, markeredgecolor='black',
+            ax.plot(robot.y, robot.x, marker="o", color=robot.couleur, markersize=12,zorder=3, markeredgecolor='black',
                     markeredgewidth=1.5)
 
+        ax.set_aspect('equal')
     anime = FuncAnimation(fig, update, frames=nbFrame, interval=200)
     anime.save("anime.gif", writer="pillow", fps=1)
