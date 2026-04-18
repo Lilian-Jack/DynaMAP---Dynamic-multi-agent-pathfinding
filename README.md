@@ -21,6 +21,7 @@ Le projet a pour objectif d'implémenter des algorithmes de pathfinding pour des
 <div align="center">
   <img src="gif/animationAstarST.gif.gif" alt="gif Astar" width="300">
 </div>
+
 ## BenchMarks
 ### Evolution du nombres de conflits en fonction des variables d'instances
 Nous avons plusieurs tests pour évaluer à quel point certaines variables avaient une influence sur le nombre de conflits
