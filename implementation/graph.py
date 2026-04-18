@@ -1,8 +1,5 @@
 import numpy as np
 
-
-
-
 #classe robot qui va bouger sur la grille, statut indique si le robot est arrivé à sa destination
 class Robot:
     def __init__(self,id,x,y,xFinal,yFinal,couleur):
@@ -75,7 +72,7 @@ class Grille:
                         break
                     #on prend en compte le fait qu'il y ai des robots déjà arrivé à destination
                 else:
-                    if robot.chemin[-1]==(i,j):
+                    if len(robot.chemin) > 0 and robot.chemin[-1]==(i,j):
                         potentiel = False
 
             if potentiel :

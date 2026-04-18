@@ -74,4 +74,4 @@ def animer(instance):
                     markeredgewidth=1.5)
 
     anime = FuncAnimation(fig, update, frames=nbFrame, interval=200)
-    anime.save("anime.gif", writer="pillow", fps=2)
+    anime.save("anime.gif", writer="pillow", fps=1)
