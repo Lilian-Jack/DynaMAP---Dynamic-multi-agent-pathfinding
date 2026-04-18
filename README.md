@@ -17,14 +17,14 @@ Le projet a pour objectif d'implémenter des algorithmes de pathfinding pour des
   <img src="gif/animationAstar.gif" alt="gif Astar" width="300">
 </div>
 
-* AstarST : Variantes Spatio-temporel de Astar qui va permettre des supprimer les conflits via une planification séquentielle (un agent après l'autre), il prend en compte le facteur temps pour éviter que deux agents réserve la même position ou arrêtes aux même moment (exemple ci-dessous avec la même instance que Astar mais sans conflits)
+* AstarST : Variantes Spatio-temporel de Astar qui va permettre des supprimer les conflits via une planification séquentielle (un agent après l'autre), il prend en compte le facteur temps pour éviter que deux agents réserve la même position ou arrêtes aux même moment (exemple ci-dessous avec la même instance que Astar mais sans conflits). Si le temps de calcul est trop long on peut ajouter un argument max_noeuds qui va arrêter l'algo en cas de recherche trop longues.
 <div align="center">
   <img src="gif/animationAstarST.gif" alt="gif Astar" width="300">
 </div>
 
 ## BenchMarks
 ### Evolution du nombres de conflits en fonction des variables d'instances
-Nous avons plusieurs tests pour évaluer à quel point certaines variables avaient une influence sur le nombre de conflits
+Nous avons fait plusieurs tests pour évaluer à quel point certaines variables avaient une influence sur le nombre de conflits
 <p align="center">
   <img src="img/taille.png" width="300">
   <img src="img/NbRobots.png" width="300">
@@ -35,3 +35,18 @@ Nous avons plusieurs tests pour évaluer à quel point certaines variables avaie
   * Plus il y a de robots, plus le nombres de conflits augmentent
   * Une densité de plus en plus élevé augmentent également le nombres de conflits
   * Une taille de grille de plus en plus grandes baissent le nombres de conflits. Cependant, cette baisse est moins marqué que lors des deux expériences précédentes
+
+### Evolution de la longueur des chemins sur Astar et AstarST en fonction des varibles d'instances
+Nous avons fait des comparaisons sur la longueur des chemins entre Astar et AstarST sur plusieurs instances
+<p align="center">
+  <img src="img/chemin_densite.png" width="300">
+  <img src="img/chemin_nbRobot.png" width="300">
+  <img src="img/chemin_taille.png" width="300">
+</p>
+
+* Remarques
+  * Il n'y a pas de grandes différences entre les deux approches car en cas de conflits les robots ont le choix d'attendre donc cela allonge peu la longueur des chemins (on constate ci-dessous que le nombre d'attentes augmentent de plus en plus car c'est le principal moyen d'éviter les conflits sans allonger la longueur des chemins)
+
+<p align="center">
+  <img src="img/attente.png" width="300">
+</p>

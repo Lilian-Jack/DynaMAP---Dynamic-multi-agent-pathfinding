@@ -45,7 +45,7 @@ class Instance:
 
                     robot = Robot(i, x, y, xDest, yDest, colors[i])
                     if chemin is None :
-                        print(f"[Warning] : Robot {i} : aucun chemin trouvé")
+                        #print(f"[Warning] : Robot {i} : aucun chemin trouvé")
                         robot.failed = True
                         robot.chemin = []
                     else :
@@ -54,6 +54,16 @@ class Instance:
                     self.grille.ajoutRobot(robot)
                     #fin du while
                     break
+
+    # fonction qui va calculer la longueur moyenne des chemins dans une instance
+    def longueurMoyenneChemin(self):
+        moyenne = 0
+        for robot in self.grille.robots:
+            if robot.chemin != []:
+                moyenne += len(robot.chemin)
+        moyenne = moyenne / len(self.grille.robots)
+        return moyenne
+
 
 
 

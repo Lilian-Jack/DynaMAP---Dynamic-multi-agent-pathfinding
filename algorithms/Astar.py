@@ -90,7 +90,9 @@ def reconstructionST(chemins,spawn,destination):
     return chemin_epure
 
 # Algorithme A* qui prend en comptel le facteur spatio temporel
-def AstarST(grille,x,y,xDest,yDest):
+def AstarST(grille,x,y,xDest,yDest,max_noeuds = 10000):
+    #compteur de noeud pour faire un timeout si cela prend trop de temps de calcul
+    noeuds_explores = 0
     #case déjà exploré par l'algo pour ne pas tourner en rond (set() suffit)
     caseExplore = set()
     #case qu'on doit exploré
@@ -107,6 +109,9 @@ def AstarST(grille,x,y,xDest,yDest):
     #tant qu'on a pas exploré toutes les cases possibles
     while(caseNonExplore):
         u = heapq.heappop(caseNonExplore)
+        noeuds_explores += 1
+        if noeuds_explores > max_noeuds:
+            return None
         #on regarde si la case est la destination
         if u[1][0]==xDest and u[1][1]==yDest:
             #fonction pour reconstituer le chemin
