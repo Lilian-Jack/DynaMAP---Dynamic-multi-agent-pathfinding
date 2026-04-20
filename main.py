@@ -17,10 +17,9 @@ animer(grilleTest)
 nbConflitsTailleGrille(0.15,12)
 nbConflitsNbRobots(0.15,12)
 nbConflitsDensite(12,12)
-"""
+
 CheminTailleGrille(12,0.15)
 CheminTailleNbRobots(12,0.15)
 CheminTailleDensite(12,8)
-
-
 #attentesNbRobots(10,0.15)
+"""

@@ -129,4 +129,42 @@ def AstarST(grille,x,y,xDest,yDest,max_noeuds = 10000):
                 chemins[(v[0],v[1],u[1][2] + 1)]=u[1]
         caseExplore.add(u[1])
 
+#algorithmes Astar pour l'algorithme CBS qui permet aux robots d'avoir des contraintes de déplacement
+def AstarCBS(grille,x,y,xDest,yDest,contraintes,max_noeuds = 10000):
+    #compteur de noeud pour faire un timeout si cela prend trop de temps de calcul
+    noeuds_explores = 0
+    #case déjà exploré par l'algo pour ne pas tourner en rond (set() suffit)
+    caseExplore = set()
+    #case qu'on doit exploré
+    caseNonExplore = []
+    #On met une limite de temps fixe pour éviter à l'algorithme de travailler sur un chemin introuvable
+    #dictionnaire qui garde en mémoire le cout des cases (le nombre de pas depuis le spawn)
+    cout = {}
+    #ajout du parametre spatio-temporel
+    heapq.heappush(caseNonExplore,(0,(x,y,0)))
+    cout[(x,y,0)]=0
 
+    #dictionnaire qui nous permet de retracer le chemin à la fin, clé : case ,valeur : case précédente
+    chemins = {}
+    #tant qu'on a pas exploré toutes les cases possibles
+    while(caseNonExplore):
+        u = heapq.heappop(caseNonExplore)
+        noeuds_explores += 1
+        if noeuds_explores > max_noeuds:
+            return None
+        #on regarde si la case est la destination
+        if u[1][0]==xDest and u[1][1]==yDest:
+            #fonction pour reconstituer le chemin
+            chemin = reconstructionST(chemins,(x,y,0),(xDest,yDest,u[1][2]))
+            return chemin
+        voisins = grille.voisinsCBS(u[1][0],u[1][1],u[1][2],contraintes)
+        for v in voisins:
+            vCout = cout[u[1]] + 1
+            #on regarde si v n'est pas exploré ou exploré avec un coup supérieur
+            if ((v[0],v[1],u[1][2] + 1) not in caseExplore) or (vCout<cout[(v[0],v[1],u[1][2]+1)]):
+                cout[(v[0],v[1],u[1][2]+1)]=vCout
+                vHeuristique = vCout + distanceManhattan(v[0],v[1],xDest,yDest)
+                heapq.heappush(caseNonExplore,(vHeuristique,(v[0],v[1],u[1][2] + 1)))
+                #construction du chemin
+                chemins[(v[0],v[1],u[1][2] + 1)]=u[1]
+        caseExplore.add(u[1])

@@ -51,8 +51,7 @@ class Grille:
     #fonction voisins qui va prendre en compte le contexte spatio-temporel qui permettra d'éliminer les conflits, rajout de la possibilité de faire du surplace
     def voisinsST(self,x,y,t):
         #print(len(self.robots))
-        #potentiels_voisins = [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1),(x,y)]
-        potentiels_voisins = [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)]
+        potentiels_voisins = [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1),(x,y)]
         voisins = []
         t_suivant = t +1
         for i,j in potentiels_voisins:
@@ -79,6 +78,24 @@ class Grille:
             if potentiel :
                 voisins.append((i, j))
 
+        return voisins
+
+    #versions de voisins utilisté pour CBS afin de prendres en comptes les contraites sur les robots
+    def voisinsCBS(self, x, y, t, contraintes):
+        potentiels_voisins = [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1), (x, y)]
+        voisins = []
+        t_suivant = t + 1
+        for i, j in potentiels_voisins:
+            #en dehors de la grille
+            if not (0 <= i < self.taille and 0 <= j < self.taille):
+                continue
+            #obstacle
+            if self.grille[i][j]:
+                continue
+            #contraites
+            if (i, j, t_suivant) in contraintes:
+                continue
+            voisins.append((i, j))
         return voisins
 
     #fonction qui nous permet de savoir si une grille contient un robot qui n'a pas su trouver son chemin
