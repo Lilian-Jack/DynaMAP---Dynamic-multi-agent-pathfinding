@@ -22,6 +22,9 @@ Le projet a pour objectif d'implémenter des algorithmes de pathfinding pour des
   <img src="gif/animationAstarST.gif" alt="gif Astar" width="300">
 </div>
 
+* CBS : Algorithme de planification qui résoud les conflits en construisant un arbre de contraintes. A chaque conflits détecté, deux noeuds fils sont créés en ajoutant une contrainte sur chacun des robots impliqués, jusqu'à trouver une solution sans conflits. 
+
+
 ## BenchMarks
 ### Evolution du nombres de conflits en fonction des variables d'instances
 Nous avons fait plusieurs tests pour évaluer à quel point certaines variables avaient une influence sur le nombre de conflits

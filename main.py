@@ -4,12 +4,12 @@ from algorithms.conflicts import detectionConflits
 from visualization.animation import afficheGrille,animer
 from stats.benchmark import *
 
-"""
-grilleTest = Instance(16,0.15,8,"naif",seed=98)
-afficheGrille(grilleTest)
+
+grilleTest = Instance(10,0.15,8,"CBS",seed=98)
+#afficheGrille(grilleTest)
 detectionConflits(grilleTest)
 animer(grilleTest)
-"""
+
 
 #benchmark
 """

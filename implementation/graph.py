@@ -18,6 +18,7 @@ class Robot:
     def ajoutChemin(self):
         self.chemin.append((self.x,self.y))
 
+
 #class Grille qui permet de construire des grilles
 class Grille:
     def __init__(self,taille,partObstacle):
